@@ -32,9 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
     clearTimeout(window.__csScaleTimer);
     window.__csScaleTimer = setTimeout(updateCSScale, 100);
   });
-  setTimeout(() => {
-    if (overlay) overlay.classList.add('active');
-  }, 2000);
+  // Show overlay immediately to avoid initial poster/logo flash
+  if (overlay) overlay.classList.add('active');
 
   // One-time swap from logo to "Coming Soon" text on first scroll/gesture
   const handleSwap = (e) => {
