@@ -1,46 +1,37 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Volume2, VolumeX, Music2 } from 'lucide-react';
-import { setBgMusicPlaying } from '@/state/audioBus';
+import { setBgMusicPlaying, subscribeBgMusic } from '@/state/audioBus';
 
 // Background audio play/mute button fixed bottom-left (opposite ThemeToggle)
-export default function BackgroundAudio({ src = '/audio/track.mp3' }) {
+export default function BackgroundAudio({ src = '/audio/track.mp3', disabled = false }) {
   const audioRef = useRef(null);
   const [playing, setPlaying] = useState(false);
-  const triedAutoRef = useRef(false);
 
   useEffect(() => {
     if (!audioRef.current) return;
     audioRef.current.volume = 0.6;
-    // Try to start automatically; browsers may block until a gesture
-    const tryStart = async () => {
-      if (triedAutoRef.current) return;
-      triedAutoRef.current = true;
-      try {
-        await audioRef.current.play();
-        setPlaying(true);
-        setBgMusicPlaying(true);
-      } catch {
-        // If blocked, wait for first user interaction to start
-        const onFirstInteract = async () => {
-          try {
-            await audioRef.current.play();
-            setPlaying(true);
-            setBgMusicPlaying(true);
-          } catch {
-            // Ignore if still blocked
-          } finally {
-            window.removeEventListener('pointerdown', onFirstInteract, { capture: true });
-            window.removeEventListener('keydown', onFirstInteract, { capture: true });
-          }
-        };
-        window.addEventListener('pointerdown', onFirstInteract, { capture: true, once: true });
-        window.addEventListener('keydown', onFirstInteract, { capture: true, once: true });
-      }
-    };
-    tryStart();
     return () => {};
   }, []);
+
+  // React to global bus requests: pause when someone sets playing to false
+  useEffect(() => {
+    const unsub = subscribeBgMusic((shouldPlay) => {
+      if (!audioRef.current) return;
+      if (!shouldPlay && !audioRef.current.paused) {
+        audioRef.current.pause();
+      }
+      // Do not auto-play on true to avoid unexpected starts
+    });
+    return () => unsub();
+  }, []);
+
+  // If disabled, ensure paused
+  useEffect(() => {
+    if (disabled && audioRef.current && !audioRef.current.paused) {
+      audioRef.current.pause();
+    }
+  }, [disabled]);
 
   const toggle = async () => {
     if (!audioRef.current) return;
