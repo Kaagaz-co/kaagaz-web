@@ -12,7 +12,7 @@ export const Footer = ({ onLinkClick, logoUrl }) => {
   return (
     <footer className="bg-background py-16 border-t border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 items-start">
           <div className="space-y-4">
             <div className="w-24">
               <img src={logoUrl} alt="Kaagaz Logo" className="w-full h-auto" />
@@ -33,16 +33,16 @@ export const Footer = ({ onLinkClick, logoUrl }) => {
             </div>
           </div>
 
-          <div>
+          <div className="justify-self-end text-right w-max pr-2">
             <span className="font-semibold text-foreground mb-4 block">Quick Links</span>
             <ul className="space-y-2">
-              <li><button onClick={() => onLinkClick('services')} className="text-muted-foreground hover:text-kaagaz-red transition-colors">Services</button></li>
-              <li><button onClick={() => onLinkClick('portfolio')} className="text-muted-foreground hover:text-kaagaz-red transition-colors">Portfolio</button></li>
-              <li><button onClick={() => onLinkClick('contact')} className="text-muted-foreground hover:text-kaagaz-red transition-colors">Let's Talk</button></li>
+              <li><button onClick={() => onLinkClick('services')} className="text-right text-muted-foreground hover:text-kaagaz-red transition-colors">Services</button></li>
+              <li><button onClick={() => onLinkClick('portfolio')} className="text-right text-muted-foreground hover:text-kaagaz-red transition-colors">Portfolio</button></li>
+              <li><button onClick={() => onLinkClick('contact')} className="text-right text-muted-foreground hover:text-kaagaz-red transition-colors">Let's Talk</button></li>
             </ul>
           </div>
 
-          <div>
+          <div className="justify-self-center text-center w-max">
             <span className="font-semibold text-foreground mb-4 block">Company</span>
             <ul className="space-y-2">
               <li><button onClick={() => onLinkClick('about')} className="text-muted-foreground hover:text-kaagaz-red transition-colors">About Us</button></li>
@@ -53,17 +53,17 @@ export const Footer = ({ onLinkClick, logoUrl }) => {
           <div>
             <span className="font-semibold text-foreground mb-4 block">Contact</span>
             <div className="space-y-3">
-              <div className="flex items-center space-x-3 text-muted-foreground">
-                <Mail className="h-4 w-4 text-kaagaz-red" />
-                <a href="mailto:info@kaagaz.co" className="hover:text-kaagaz-red transition-colors">info@kaagaz.co</a>
+              <div className="flex items-start space-x-3 text-muted-foreground">
+                <Mail className="h-4 w-4 text-kaagaz-red mt-0.5 flex-shrink-0" />
+                <a href="mailto:info@kaagaz.co" className="hover:text-kaagaz-red transition-colors leading-tight">info@kaagaz.co</a>
               </div>
-              <div className="flex items-center space-x-3 text-muted-foreground">
-                <Phone className="h-4 w-4 text-kaagaz-red" />
-                <a href="tel:+919149938056" className="hover:text-kaagaz-red transition-colors">+91 91499-38056</a>
+              <div className="flex items-start space-x-3 text-muted-foreground">
+                <Phone className="h-4 w-4 text-kaagaz-red mt-0.5 flex-shrink-0" />
+                <a href="tel:+919149938056" className="hover:text-kaagaz-red transition-colors leading-tight">+91 91499-38056</a>
               </div>
-              <div className="flex items-center space-x-3 text-muted-foreground">
-                <MapPin className="h-4 w-4 text-kaagaz-red" />
-                <span>Udyog Vihar Phase 1, Gurugram - 122002</span>
+              <div className="flex items-start space-x-3 text-muted-foreground">
+                <MapPin className="h-4 w-4 text-kaagaz-red mt-0.5 flex-shrink-0" />
+                <span className="leading-tight">Udyog Vihar Phase 1, Gurugram - 122002</span>
               </div>
             </div>
           </div>

@@ -40,7 +40,7 @@ const services = [
     icon: Brush,
     title: "Visual Branding",
     description:
-      "Crafting brand identities with a desi, retro soul—timeless, memorable, and true to your story.",
+  "We craft brand identities that hit with soul, nostalgia and attitude timeless, unforgettable and unapologetically yours.",
     points: [
       "Logo design & redesign",
       "Brand identity systems",
@@ -54,7 +54,7 @@ const services = [
     icon: Code,
     title: "Website Design & Development",
     description:
-      "Beautiful, fast websites—blending traditional aesthetics with modern UX.",
+  "We craft websites that aren’t just seen they’re experienced",
     points: [
       "Custom HTML/CSS websites",
       "Responsive, mobile-first design",
@@ -68,12 +68,12 @@ const services = [
     icon: Megaphone,
     title: "Creative Campaigns",
     description:
-      "Story-driven campaigns with cultural texture—crafted to resonate.",
+      "We design campaigns that spark conversations and connect with culture.",
     points: [
-      "Story-driven marketing campaigns",
-      "Product launches with visual storytelling",
+      "Brand & product launches",
       "Social media creative direction",
       "Content strategy & design",
+      "Story driven marketing campaigns",
     ],
   image: imgCampaigns,
     alt: "Bollywood-style retro posters and campaign art",
@@ -82,7 +82,7 @@ const services = [
     icon: BarChart,
     title: "Digital Marketing",
     description:
-      "Performance with panache—reach, engage, and convert across platforms.",
+      "Turning clicks into conversations, scrolls into sales.",
     points: [
       "Social media management (Instagram, Facebook, LinkedIn)",
       "Ad campaign strategy & execution (Meta, Google)",
@@ -96,7 +96,7 @@ const services = [
     icon: Store,
     title: "E-commerce Content & Collaterals",
     description:
-      "Product visuals and A+ content with a warm, nostalgic Indian aesthetic.",
+      "From clicks to cravings content that sells with soul.",
     points: [
       "Amazon A+ product pages",
       "Product photography & presentation",

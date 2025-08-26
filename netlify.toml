@@ -1,0 +1,15 @@
+[build]
+  publish = "dist"
+  command = "npm run build"
+  functions = "netlify/functions"
+
+[[plugins]]
+  package = "@netlify/plugin-functions-install-core"
+
+[functions]
+  included_files = ["dist/**"]
+
+[[events]]
+  event = "submission_created"
+  # When a Netlify form submission is created, invoke this function
+  function = "submission-created"

@@ -5,7 +5,9 @@
 	"private": true,
 	"scripts": {
 		"dev": "vite",
-		"build": "vite build",
+		"build": "vite build --mode netlify",
+		"build:netlify": "vite build --mode netlify",
+		"build:gh": "vite build",
 		"preview": "vite preview"
 	},
 	"dependencies": {

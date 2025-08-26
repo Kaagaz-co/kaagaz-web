@@ -120,11 +120,7 @@ const CollageItem = ({ item, index, onOpen }) => {
             }}
           />
         )}
-  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent pointer-events-none" />
-  <div className="absolute bottom-0 left-0 p-4 md:p-5">
-          <p className="text-xs md:text-sm text-kaagaz-red font-semibold">{item.category}</p>
-          {/* Title hidden as requested */}
-        </div>
+  {/* Removed text overlays (category/title) per request */}
       </div>
     </motion.button>
   );

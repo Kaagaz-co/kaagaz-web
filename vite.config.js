@@ -2,13 +2,20 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 
-// Use root base in dev; keep '/kaagaz-web/' for production builds (GitHub Pages)
-export default defineConfig(({ command }) => ({
-  base: command === 'serve' ? '/' : '/kaagaz-web/',
-  plugins: [react()],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src')
+// Base rules:
+// - dev: '/'
+// - build --mode netlify: '/'
+// - other builds (e.g., GitHub Pages): '/kaagaz-web/'
+export default defineConfig(({ command, mode }) => {
+  const isDev = command === 'serve';
+  const isNetlify = mode === 'netlify' || process.env.NETLIFY === 'true';
+  return {
+    base: isDev || isNetlify ? '/' : '/kaagaz-web/',
+    plugins: [react()],
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, './src')
+      }
     }
-  }
-}));
+  };
+});

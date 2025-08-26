@@ -5,7 +5,6 @@ import { setBgMusicPlaying } from '@/state/audioBus';
 
 export default function IntroVideoOverlay({ show, onEnd }) {
 	const videoRef = useRef(null);
-	const [isMutedAutoplay, setIsMutedAutoplay] = useState(false);
 
 	// Lock body scroll while overlay is visible
 	useEffect(() => {
@@ -46,36 +45,32 @@ export default function IntroVideoOverlay({ show, onEnd }) {
 			if (!show || !videoRef.current) return;
 			// Always restart from the beginning when shown
 			videoRef.current.currentTime = 0;
-			// Try autoplay with sound; if blocked, fall back to muted autoplay (no prompt)
-				const tryPlay = async () => {
-				try {
-					videoRef.current.muted = false;
-					await videoRef.current.play();
-						setIsMutedAutoplay(false);
-				} catch (e1) {
-					try {
-						videoRef.current.muted = true;
-						await videoRef.current.play();
-							setIsMutedAutoplay(true);
-					} catch (e2) {
-					  // Even muted autoplay failed – skip the intro to avoid blocking the user
-					  setIsMutedAutoplay(false);
-					  if (typeof onEnd === 'function') onEnd();
-					}
-				}
-			};
+				// Try autoplay with sound; if blocked, fall back to muted autoplay (no prompt)
+					const tryPlay = async () => {
+						try {
+							videoRef.current.muted = false;
+							await videoRef.current.play();
+					} catch (_) {
+						try {
+							videoRef.current.muted = true;
+							await videoRef.current.play();
+						} catch {
+							// If even muted playback fails, skip the intro rather than block UX
+							if (typeof onEnd === 'function') onEnd();
+						}
+						}
+					};
 			tryPlay();
 		}, [show]);
 
 		// If user taps/clicks anywhere on overlay while muted playback is running, try to unmute
-		const handlePointerDown = async () => {
+			const handlePointerDown = async () => {
 			const v = videoRef.current;
 			if (!v) return;
 			if (!v.paused && v.muted) {
 				try {
 					v.muted = false;
 					await v.play();
-			setIsMutedAutoplay(false);
 				} catch {}
 			}
 		};
@@ -104,7 +99,7 @@ export default function IntroVideoOverlay({ show, onEnd }) {
 						muted={false}
 					/>
 
-					  {/* Hint: only show scroll-to-skip; no tap-for-sound prompt */}
+					  {/* Hint: only show scroll-to-skip */}
 											<div className="absolute bottom-6 inset-x-0 flex justify-center">
 												<div className="flex items-center gap-2">
 													<div className="px-4 py-2 rounded-full text-xs sm:text-sm text-white/80 bg-black/40 border border-white/20">
