@@ -1,0 +1,2 @@
+*.mp4 filter=lfs diff=lfs merge=lfs -text
+portfolio/videos/coca[[:space:]]cola[[:space:]]INSWA[[:space:]]video[[:space:]]1.mp4 filter=lfs diff=lfs merge=lfs -text
