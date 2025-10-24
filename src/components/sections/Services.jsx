@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useMotionValue, useAnimationFrame } from 'framer-motion';
 import { Brush, Code, Megaphone, BarChart, Store } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -143,8 +143,31 @@ const ServiceCard = ({ service, index, total, scrollYProgress }) => {
   const end = (index + 1) / total;
   const center = (start + end) / 2;
 
+  // Keep scale effect based on scroll segment for depth perception
   const scale = useTransform(scrollYProgress, [start, center, end], [0.85, 1, 0.85]);
-  const glowOpacity = useTransform(scrollYProgress, [start, center, end], [0, 1, 0]);
+
+  // New glow logic: based on actual horizontal centering in viewport
+  const glowOpacity = useMotionValue(0);
+
+  useAnimationFrame(() => {
+    const el = cardRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const viewportCenterX = window.innerWidth / 2;
+    const cardCenterX = rect.left + rect.width / 2;
+    const dist = Math.abs(cardCenterX - viewportCenterX);
+
+    // Threshold: glow starts ramping within 55% of card width from center
+    const threshold = rect.width * 0.55;
+    if (dist > threshold) {
+      if (glowOpacity.get() !== 0) glowOpacity.set(0);
+      return;
+    }
+    const t = 1 - dist / threshold; // 0 (edge) -> 1 (center)
+    // Ease (cubic) for smooth bloom
+    const eased = t * t * (3 - 2 * t); // smoothstep-ish
+    glowOpacity.set(eased);
+  });
 
   return (
     <motion.div
@@ -154,7 +177,7 @@ const ServiceCard = ({ service, index, total, scrollYProgress }) => {
     >
       <motion.div
         style={{ opacity: glowOpacity }}
-        className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-kaagaz-red/50 via-kaagaz-cream/50 to-kaagaz-red/50 blur-2xl z-0"
+        className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-kaagaz-red/50 via-kaagaz-cream/50 to-kaagaz-red/50 blur-2xl z-0 will-change-opacity pointer-events-none"
         aria-hidden="true"
       />
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center max-w-6xl mx-auto p-8 rounded-2xl bg-background border border-border shadow-2xl">

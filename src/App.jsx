@@ -16,6 +16,8 @@ import IntroVideoOverlay from './components/IntroVideoOverlay';
 import bgmUrl from '../bgm/webaudio.mp3?url';
 import { setBgMusicPlaying } from './state/audioBus';
 import sideVideoUrl from '../video/kaagaz-intro.mp4?url';
+import logoBeigeUrl from './assets/logo-beige.svg';
+import logoRedUrl from './assets/logo-red.svg';
 
 export function App() {
   const [theme, setTheme] = useState('dark');
@@ -27,10 +29,8 @@ export function App() {
   const introPlayedRef = useRef(false);
   const [docked, setDocked] = useState(false);
 
-  // Original logo assets
-  const whiteLogoUrl = "https://horizons-cdn.hostinger.com/ea4a0944-c125-4cee-b05d-173d6af0abc9/870850d9c0845479e374ac68bb031de4.png";
-  const blackLogoUrl = "https://horizons-cdn.hostinger.com/ea4a0944-c125-4cee-b05d-173d6af0abc9/7135189e6127c43c5f180675693db8e4.png";
-  const currentLogo = theme === 'dark' ? whiteLogoUrl : blackLogoUrl;
+  // Local logo assets: red for light mode, beige for dark mode
+  const currentLogo = theme === 'dark' ? logoBeigeUrl : logoRedUrl;
 
   useEffect(() => {
     const root = window.document.documentElement;

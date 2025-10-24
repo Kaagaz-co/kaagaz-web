@@ -30,7 +30,7 @@ export const Header = ({ onLinkClick, scrollYProgress, logoUrl, docked = false }
               onClick={() => onLinkClick('contact')} 
               className="bg-kaagaz-red text-white px-6 py-2 rounded-md hover:bg-kaagaz-red/90 transition-colors duration-300 font-semibold"
             >
-              Let's Talk
+              Book Free Call
             </button>
           </nav>
         </div>
