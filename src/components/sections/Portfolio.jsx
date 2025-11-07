@@ -8,29 +8,43 @@ const formatTitle = (path) => {
   return name.replace(/[\-_]+/g, ' ').replace(/\s+/g, ' ').trim();
 };
 
-// Load local assets using Vite's import.meta.glob
-const reelsMap = import.meta.glob('../../../portfolio/reels/*.{mp4,MP4}', { eager: true, as: 'url' });
-const videosMap = import.meta.glob('../../../portfolio/videos/*.{mp4,MP4}', { eager: true, as: 'url' });
-const staticsMap = import.meta.glob('../../../portfolio/statics/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}', { eager: true, as: 'url' });
+// Load local assets (flat folder) using Vite's import.meta.glob
+// We previously had separate folders (reels/videos/statics). Those were removed; adapt to current flat structure.
+const flatAssets = import.meta.glob('../../../assets/portfolio/portfolio/*.{mp4,MP4,jpg,jpeg,png,webp,gif,JPG,JPEG,PNG,WEBP,GIF}', { eager: true, as: 'url' });
 
 const buildItems = () => {
   const photos = [];
   const reels = [];
   const videos = [];
 
-  for (const [path, url] of Object.entries(staticsMap)) {
+  for (const [path, url] of Object.entries(flatAssets)) {
+    const lower = path.toLowerCase();
     const title = formatTitle(path);
-    const forceHorizontal = /loved by you\.png$/i.test(path) || /loved by you$/i.test(title);
-    photos.push({ type: 'image', src: url, title, category: 'Photo', alt: title, forceHorizontal });
-  }
-  for (const [path, url] of Object.entries(reelsMap)) {
-    reels.push({ type: 'video', src: url, title: formatTitle(path), category: 'Reel', alt: formatTitle(path) });
-  }
-  for (const [path, url] of Object.entries(videosMap)) {
-    videos.push({ type: 'video', src: url, title: formatTitle(path), category: 'Video', alt: formatTitle(path) });
+    const isVideo = /\.mp4$/i.test(lower);
+    const isGif = /\.gif$/i.test(lower);
+    // Heuristic: treat vertical-looking filenames containing 'reel' as reels
+    if (isVideo) {
+      if (/reel|vertical|iphone|chair|headphones|render/i.test(lower)) {
+        reels.push({ type: 'video', src: url, title, category: 'Reel', alt: title });
+      } else {
+        videos.push({ type: 'video', src: url, title, category: 'Video', alt: title });
+      }
+      continue;
+    }
+    if (!isVideo && !isGif) {
+      const forceHorizontal = /loved by you\.png$/i.test(path) || /loved by you$/i.test(title);
+      photos.push({ type: 'image', src: url, title, category: 'Photo', alt: title, forceHorizontal });
+      continue;
+    }
+    // GIFs: treat as photos for layout purposes
+    if (isGif) {
+      photos.push({ type: 'image', src: url, title, category: 'Photo', alt: title });
+    }
   }
 
-  // Interleave in an entertaining repeating pattern: Photo → Reel → Photo → Video
+  if (!photos.length && !reels.length && !videos.length) return [];
+
+  // Interleave pattern similar to previous approach
   const pattern = ['photo', 'reel', 'photo', 'video'];
   const result = [];
   let i = 0;
@@ -49,7 +63,7 @@ const buildItems = () => {
     i++;
   }
 
-  // Base mosaic pattern, then adjust by type to enforce orientation
+  // Apply spans
   return result.map((it, idx) => {
     let span =
       idx % 6 === 0
@@ -154,11 +168,15 @@ export const Portfolio = ({ onLinkClick }) => {
           </p>
         </motion.div>
 
-  <div className="grid grid-cols-2 md:grid-cols-6 auto-rows-[10rem] md:auto-rows-[12rem] gap-4 md:gap-5">
-          {items.map((item, index) => (
-            <CollageItem key={index} item={item} index={index} onOpen={setActive} />
-          ))}
-        </div>
+        {items.length === 0 ? (
+          <div className="text-center text-muted-foreground py-12">Portfolio is loading or empty.</div>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-6 auto-rows-[10rem] md:auto-rows-[12rem] gap-4 md:gap-5">
+            {items.map((item, index) => (
+              <CollageItem key={index} item={item} index={index} onOpen={setActive} />
+            ))}
+          </div>
+        )}
 
   {/* Removed Full Portfolio button as requested */}
       </div>
