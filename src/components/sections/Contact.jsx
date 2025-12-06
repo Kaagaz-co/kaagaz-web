@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/components/ui/use-toast';
-import { ScheduleCall } from '@/components/ScheduleCall';
+import { BrandAuditForm } from '@/components/BrandAuditForm';
 
 export const Contact = () => {
   const handleSubmit = async (e) => {
@@ -39,7 +39,7 @@ export const Contact = () => {
             Let's <span className="gradient-text">Talk</span>
           </h2>
           <p className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
-            Got an idea? A crazy project? Or just feel like saying hi? Hit us up we love a good chat. Fill the form below and we'll get back to you before you know it. Or book a free call at{' '}
+            Got an idea? A crazy project? Or just feel like saying hi? Hit us up we love a good chat. Fill the form below and we'll get back to you before you know it. Or get your FREE brand audit at{' '}
             <a href="https://kaagaz.co" target="_blank" rel="noopener noreferrer" className="text-kaagaz-red hover:underline font-semibold">
               kaagaz.co
             </a>
@@ -53,7 +53,7 @@ export const Contact = () => {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="mb-12 flex justify-center"
         >
-          <ScheduleCall />
+          <BrandAuditForm />
         </motion.div>
 
   {/* Contact info grid removed per request */}

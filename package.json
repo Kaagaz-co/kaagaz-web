@@ -5,9 +5,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "vite",
-		"build": "vite build --mode netlify",
-		"build:netlify": "vite build --mode netlify",
-		"build:gh": "vite build",
+		"build": "vite build",
 		"preview": "vite preview"
 	},
 	"dependencies": {
@@ -26,6 +24,7 @@
 		"firebase": "^12.1.0",
 		"framer-motion": "^10.16.4",
 		"lucide-react": "^0.285.0",
+		"nodemailer": "^7.0.11",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-helmet": "^6.1.0",
@@ -37,11 +36,13 @@
 		"@babel/parser": "^7.27.0",
 		"@babel/traverse": "^7.27.0",
 		"@babel/types": "^7.27.0",
+		"@netlify/functions": "^5.1.0",
 		"@types/node": "^20.8.3",
 		"@types/react": "^18.2.15",
 		"@types/react-dom": "^18.2.7",
 		"@vitejs/plugin-react": "^4.0.3",
 		"autoprefixer": "^10.4.16",
+		"dotenv": "^17.2.3",
 		"eslint": "^8.57.1",
 		"eslint-config-react-app": "^7.0.1",
 		"postcss": "^8.4.31",
