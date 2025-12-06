@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, useTransform } from 'framer-motion';
+import { BrandAuditForm } from '@/components/BrandAuditForm';
 
 export const Header = ({ onLinkClick, scrollYProgress, logoUrl, docked = false }) => {
+  const [showAuditForm, setShowAuditForm] = useState(false);
   // Reveal header earlier so it appears immediately as the logo moves
   const headerOpacity = useTransform(scrollYProgress, [0.02, 0.04], [0, 1]);
   const headerY = useTransform(scrollYProgress, [0.02, 0.04], [-100, 0]);
@@ -26,12 +28,13 @@ export const Header = ({ onLinkClick, scrollYProgress, logoUrl, docked = false }
           </motion.div>
           <nav className="flex items-center space-x-8">
             <button onClick={() => onLinkClick('portfolio')} className="text-foreground hover:text-kaagaz-red transition-colors duration-300 font-medium">Portfolio</button>
-            <button 
-              onClick={() => onLinkClick('contact')} 
-              className="bg-kaagaz-red text-white px-6 py-2 rounded-md hover:bg-kaagaz-red/90 transition-colors duration-300 font-semibold"
-            >
-              Book Free Call
-            </button>
+            <BrandAuditForm 
+              trigger={
+                <button className="bg-kaagaz-red text-white px-6 py-2 rounded-md hover:bg-kaagaz-red/90 transition-colors duration-300 font-semibold">
+                  Book Your FREE Brand Audit
+                </button>
+              }
+            />
           </nav>
         </div>
       </div>
