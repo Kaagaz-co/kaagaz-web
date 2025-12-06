@@ -451,7 +451,7 @@ async function sendWithResend(emailData) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      from: `Kaagaz Studios <${emailData.from}>`,
+      from: emailData.from,
       to: [emailData.to],
       subject: emailData.subject,
       html: emailData.html,
@@ -460,6 +460,8 @@ async function sendWithResend(emailData) {
   });
 
   if (!response.ok) {
+    const errorData = await response.text();
+    console.error('Resend API error:', errorData);
     throw new Error(`Resend error: ${response.statusText}`);
   }
 }
