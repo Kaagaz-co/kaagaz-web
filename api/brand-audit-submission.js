@@ -217,7 +217,6 @@ function generateAdminNotificationEmail(data) {
             <td><a href="mailto:${data.email}" style="color: #DC2626;">${data.email}</a></td>
           </tr>
           <tr>
-  return `
             <td>Phone</td>
             <td><a href="tel:${data.phone}" style="color: #DC2626;">${data.phone}</a></td>
           </tr>
@@ -377,7 +376,6 @@ Timeline: Your comprehensive audit will be completed within 3 working days.
 
 We've received the following information:
 - Name: ${data.name}
-  return `
 - Brand: ${data.brandName}
 - Business: ${data.business}
 - Sales Channels: ${data.salesChannel}
@@ -453,7 +451,7 @@ async function sendWithResend(emailData) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      from: `Kaagaz Studios <${emailData.from}>`,
+      from: emailData.from,
       to: [emailData.to],
       subject: emailData.subject,
       html: emailData.html,
@@ -462,6 +460,8 @@ async function sendWithResend(emailData) {
   });
 
   if (!response.ok) {
+    const errorData = await response.text();
+    console.error('Resend API error:', errorData);
     throw new Error(`Resend error: ${response.statusText}`);
   }
 }
