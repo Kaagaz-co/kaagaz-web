@@ -217,7 +217,6 @@ function generateAdminNotificationEmail(data) {
             <td><a href="mailto:${data.email}" style="color: #DC2626;">${data.email}</a></td>
           </tr>
           <tr>
-  return `
             <td>Phone</td>
             <td><a href="tel:${data.phone}" style="color: #DC2626;">${data.phone}</a></td>
           </tr>
@@ -377,7 +376,6 @@ Timeline: Your comprehensive audit will be completed within 3 working days.
 
 We've received the following information:
 - Name: ${data.name}
-  return `
 - Brand: ${data.brandName}
 - Business: ${data.business}
 - Sales Channels: ${data.salesChannel}
